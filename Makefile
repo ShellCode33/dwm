@@ -26,7 +26,7 @@ dwm: ${OBJ}
 
 .PHONY: clean
 clean:
-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	rm -f dwm ${OBJ}
 
 .PHONY: install
 install: all
