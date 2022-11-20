@@ -6,17 +6,18 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_darkred[]     = "#8b0000";
-static const char *colors[][3]      = {
-	/*               fg         bg           border   */
-	[SchemeNorm] = { col_gray3, col_gray1,   col_gray2 },
-	[SchemeSel]  = { col_gray4, col_darkred, col_darkred  },
+static char font[]            = "monospace:size=10";
+static const char *fonts[]          = { font };
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#8b0000";
+static char selbgcolor[]            = "#8b0000";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -64,10 +65,23 @@ static const Layout monocle_layout = { "[M]", monocle };
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_darkred, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x34", NULL };
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+    { "font",       STRING,  &font },
+    { "background", STRING,  &normbgcolor },
+    { "color8",     STRING,  &normbordercolor },
+    { "color7",     STRING,  &normfgcolor },
+    { "color1",     STRING,  &selbgcolor },
+    { "color1",     STRING,  &selbordercolor },
+    { "color15",    STRING,  &selfgcolor },
+};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
