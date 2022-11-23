@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Additional headers required for this config to work */
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -115,6 +118,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_egrave,                 6)
 	TAGKEYS(                        XK_underscore,             7)
 	TAGKEYS(                        XK_ccedilla,               8)
+
+    { 0, XF86XK_AudioMute,		    spawn,		SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle; kill -44 $(pidof dwm-status-bar)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; kill -44 $(pidof dwm-status-bar)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; kill -44 $(pidof dwm-status-bar)") },
+
+    { 0, XF86XK_MonBrightnessUp,	spawn,		{.v = (const char*[]){ "xbacklight", "-inc", "10", NULL } } },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		{.v = (const char*[]){ "xbacklight", "-dec", "10", NULL } } },
 };
 
 /* button definitions */
